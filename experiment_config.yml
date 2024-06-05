@@ -1,0 +1,25 @@
+template_file_name: "mtdoctor_template.txt"
+query_file_name: "mtdoctor"
+knowledge_base_dir: "knowledge_base"
+log_dir: "logs"
+models:
+  - "llama2:7b"   #4bit
+  - "llama2:13b"  #4bit
+  - "llama2:70b"  #4bit
+  - "mixtral"     #(8*7b)4bit 
+  - "mixtral:8x22b-instruct"   #4bit
+  - "llama3:8b"   #4bit
+  - "llama3:70b"  #4bit
+rag_collection_name: "new_collection" # String|leave empty
+quantization:
+  - "pq"
+  - "scalar"
+  - "no"
+chunk_size: 
+  - 500
+  - 1000
+  - 2000
+top_k: 
+  - 2
+  - 5
+  - 10

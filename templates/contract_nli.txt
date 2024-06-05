@@ -1,0 +1,40 @@
+# Few-shot Pipeline Template
+
+Identify if {question}.
+Text: {previous_text}
+Claim: {annotation}
+Text continued: {next_text}
+Answer: {answer}
+
+Here are some examples of identifying whether a hypothesis is entailed or contradicted by a given text:
+
+[Example 1]
+Identify if {example_question}.
+Text: {example_previous_text}
+Claim: {example_annotation}
+Text continued: {example_next_text}
+Answer: {example_answer}
+
+[Example 2]
+Identify if {example_question}.
+Text: {example_previous_text}
+Claim: {example_annotation}
+Text continued: {example_next_text}
+Answer: {example_answer}
+
+[... more examples ...]
+
+Given the following text and hypothesis, identify if the hypothesis is entailed or contradicted, only output Entailment or Contradicted, no other words.
+Hypothesis: {question}
+Text: {previous_text}
+Claim: {annotation}
+Text continued: {next_text}
+Answer:
+
+# RAG Pipeline Template
+
+Here are some resources that are maybe helpful to you. {context}
+
+Question starts here:
+
+{input}
