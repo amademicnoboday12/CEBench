@@ -1,7 +1,9 @@
 
-# Configuration Instructions for Benchmarking LLMS
+CEBench is an LLM benchmarking tookit focusing on cost-effectiveness of LLM pipelines.
 
-This guide provides detailed instructions on setting up and running experiments in the `benchmark_llms` repository.
+# Configuration Instructions for CEBench
+
+This guide provides detailed instructions on setting up and running experiments in the `CEBench` repository.
 
 ## Getting Started
 
