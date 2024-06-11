@@ -53,10 +53,6 @@ def read_in_gd():
 if __name__ == "__main__":
     from query_llms import query
     from load_rag import load_knowledge_base
-    import sys
-    if len(sys.argv)>1:
-        current_time=sys.argv[1]
-
     context_enable = os.path.exists(CONTEXT_FILE)
     exp_id = 0
     if RAG_COLLECTION is not None:
