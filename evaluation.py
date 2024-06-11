@@ -15,12 +15,12 @@ current_time=time.time()
 rag_log_file = f"results/evaluation_with_rag.log_{current_time}"
 response_with_rag_log_file = f"results/response_with_rag.txt_{current_time}"
 
-context_log_file = f"loresultsgs/evaluation_with_context.log_{current_time}"
+context_log_file = f"results/evaluation_with_context.log_{current_time}"
 response_with_context_log_file = f"results/response_with_context.txt_{current_time}"
 
 metric_log_file = f"results/metric.log_{current_time}"
 
-configures = yaml.load(open("experiment_config.yml").read(), Loader=Loader)
+configures = yaml.load(open("configs/experiment_config.yml").read(), Loader=Loader)
 TEMPLATE_PATH = f'./templates/{configures["template_file_name"]}'
 KNOWLEDGE_PATH = f'./knowledge_base/{configures["knowledge_base_dir"]}'
 MODELS = configures["models"]
@@ -53,6 +53,7 @@ def read_in_gd():
 if __name__ == "__main__":
     from query_llms import query
     from load_rag import load_knowledge_base
+
     context_enable = os.path.exists(CONTEXT_FILE)
     exp_id = 0
     if RAG_COLLECTION is not None:

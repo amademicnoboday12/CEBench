@@ -3,7 +3,7 @@ import yaml
 import pandas as pd
 from paretoset import paretoset
 def plan_recommender(resource_type,metric_log_file,evaluation_file):
-    configures = yaml.load(open("instance_quote.yml").read(), Loader=Loader)
+    configures = yaml.load(open("configs/instance_quote.yml").read(), Loader=Loader)
     resources=configures["resources"]
     for resource in resources:
         if resource["type"]==resource_type:

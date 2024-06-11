@@ -23,7 +23,7 @@ sudo systemctl restart docker
 #########qdrant
 docker pull qdrant/qdrant
 
-mkdir -p knowledge_base llms logs queries templates vec_db
+mkdir -p knowledge_base llms results queries templates vec_db
 
 
 # Run the containers before evaluation
