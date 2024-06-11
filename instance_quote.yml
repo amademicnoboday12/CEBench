@@ -1,0 +1,16 @@
+resource:
+  -type: "VM"
+   instances:
+    - name: "G5"
+      TFlops: "0.5"
+      memory: "16GB"
+      price: "0.88"
+    - name: "G5"
+      TFlops: "0.5"
+      memory: "16GB"
+      price: "0.88"
+  
+  -type: "SERVICE"
+   instances:
+    - name: "Claude"
+      price: "0.022"
