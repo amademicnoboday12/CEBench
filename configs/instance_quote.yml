@@ -1,0 +1,42 @@
+resources:
+  - type: "VM"
+    instances:
+    - name: "P2"
+      TFlops: "8.22"
+      memory: "12"
+      price: "1.326"
+
+    - name: "P3"
+      TFlops: "32.71"
+      memory: "16"
+      price: "3.823"
+
+    - name: "G5"
+      TFlops: "31.52"
+      memory: "24"
+      price: "1.515"
+    
+    - name: "G6"
+      TFlops: "30.29"
+      memory: "16"
+      price: "1.172"
+
+    - name: "A100"
+      TFlops: "77.97"
+      memory: "80"
+      price: "4.777"
+  
+  - type: "SERVICE"
+    instances:
+    - name: "Haiku"
+      in_price: "0.25"
+      out_price: "1.25"
+    - name: "Sonnet"
+      in_price: "3."
+      out_price: "15"
+    - name: "Opus"
+      in_price: "15"
+      out_price: "75"
+    - name: "GPT-4"
+      in_price: "10"
+      out_price: "30"

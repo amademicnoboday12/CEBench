@@ -1,7 +1,7 @@
 template_file_name: "mtdoctor_template.txt"
 query_file_name: "mtdoctor"
 knowledge_base_dir: "knowledge_base"
-log_dir: "logs"
+log_dir: "results"
 models:
   - "llama2:7b"   #4bit
   - "llama2:13b"  #4bit

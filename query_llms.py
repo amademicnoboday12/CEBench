@@ -8,6 +8,7 @@ from langchain_community.llms import Ollama
 from langchain_core.runnables import RunnablePassthrough
 from private_embedding import embeddings
 from timer_callback import TimerCallback
+from post_processing import post_processing_mental
 
 
 def query(
@@ -66,4 +67,4 @@ def query(
 
     answer = rag_chain.invoke(query_text, config={"callbacks": [handler]})
 
-    return answer.replace("\n", " <br> "), sum(time_rag.values()), time_llm[0],handler.input_token,handler.output_token
+    return post_processing_mental(answer.replace("\n", " <br> ")), sum(time_rag.values()), time_llm[0],handler.input_token,handler.output_token

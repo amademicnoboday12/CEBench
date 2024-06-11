@@ -4,6 +4,9 @@ pip3 install --upgrade qdrant-client
 pip3 install langchainhub
 pip3 install loguru
 pip3 install -qU langchain-openai
+pip3 install nvidia-ml-py3
+pip3 install pandas
+pip3 install paretoset
 
 #########ollama
 docker pull ollama/ollama
@@ -20,7 +23,7 @@ sudo systemctl restart docker
 #########qdrant
 docker pull qdrant/qdrant
 
-mkdir -p knowledge_base llms logs queries templates vec_db
+mkdir -p knowledge_base llms results queries templates vec_db
 
 
 # Run the containers before evaluation
