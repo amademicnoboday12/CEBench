@@ -1,16 +1,32 @@
-resource:
-  -type: "VM"
-   instances:
+resources:
+  - type: "VM"
+    instances:
+    - name: "P2"
+      TFlops: "8.22"
+      memory: "12"
+      price: "1.326"
+
+    - name: "P3"
+      TFlops: "32.71"
+      memory: "16"
+      price: "3.823"
+
     - name: "G5"
-      TFlops: "0.5"
-      memory: "16GB"
-      price: "0.88"
-    - name: "G5"
-      TFlops: "0.5"
-      memory: "16GB"
-      price: "0.88"
+      TFlops: "31.52"
+      memory: "24"
+      price: "1.515"
+    
+    - name: "G6"
+      TFlops: "30.29"
+      memory: "16"
+      price: "1.172"
+
+    - name: "A100"
+      TFlops: "77.97"
+      memory: "80"
+      price: "4.777"
   
-  -type: "SERVICE"
-   instances:
+  - type: "SERVICE"
+    instances:
     - name: "Claude"
       price: "0.022"

@@ -4,6 +4,9 @@ pip3 install --upgrade qdrant-client
 pip3 install langchainhub
 pip3 install loguru
 pip3 install -qU langchain-openai
+pip3 install nvidia-ml-py3
+pip3 install pandas
+pip3 install paretoset
 
 #########ollama
 docker pull ollama/ollama

@@ -6,6 +6,9 @@ from load_rag import load_knowledge_base
 from loguru import logger
 import time
 from scorer import scorer_mental
+import nvidia_smi
+import plan_recommender
+
 
 current_time=time.time()
 
@@ -50,10 +53,16 @@ def read_in_gd():
 if __name__ == "__main__":
     from query_llms import query
     from load_rag import load_knowledge_base
+    nvidia_smi.nvmlInit()
+    import sys
+    if len(sys.argv)>1:
+        current_time=sys.argv[1]
 
     context_enable = os.path.exists(CONTEXT_FILE)
     exp_id = 0
     if RAG_COLLECTION is not None:
+        with open(metric_log_file, "a") as m:
+            m.write("Experiment ID,Score, Max GPU Memory\n")
         with open(response_with_rag_log_file, "w") as f:
             logger.add(rag_log_file, format="{message}", level="INFO")
             logger.info("Experiment ID, Query ID, Collection, Quantization, Chunk, Model, Top K, Input token, Output token, Time RAG, Time LLM")
@@ -64,6 +73,7 @@ if __name__ == "__main__":
                         for top_k in TOP_K:
                             answers=[]
                             exp_id += 1
+                            max_gpu_mem=0
                             for qid, query_text, context in read_in_queries():
                                 answer, time_rag, time_llm, input_token,output_token = query(
                                     query_text,
@@ -78,17 +88,24 @@ if __name__ == "__main__":
                                     f"{exp_id}, {qid}, {RAG_COLLECTION}, {qt},{chunk}, {model},{top_k}, {input_token}, {output_token}, {time_rag}, {time_llm}"
                                 )
                                 f.write(answer + "\n")
+                                handle = nvidia_smi.nvmlDeviceGetHandleByIndex(0)
+                                info = nvidia_smi.nvmlDeviceGetMemoryInfo(handle)
+                                if info.used > max_gpu_mem:
+                                    max_gpu_mem=info.used
                             score=scorer_mental(read_in_gd(),answers)
                             with open(metric_log_file, "a") as m:
-                                m.write(f"{exp_id}, {RAG_COLLECTION}, {qt},{chunk}, {model},{top_k}, {score}\n")
-
+                                m.write(f"{exp_id}, {score},{max_gpu_mem/(1024**3)}\n")
+        plan_recommender.plan_recommender('VM',metric_log_file,rag_log_file)
     else:
+        with open(metric_log_file, "a") as m:
+            m.write("Experiment ID, Score, Max GPU Memory\n")
         with open(response_with_context_log_file, "w") as f:
             logger.add(context_log_file, format="{message}", level="INFO")
             logger.info("Experiment ID, Query ID, Model, Input token, Output token, Time RAG, Time LLM")
             for model in MODELS:
                 exp_id += 1
                 answers=[]
+                max_gpu_mem=0
                 for qid, query_text, context in read_in_queries():
                     if context_enable:
                         answer, time_rag, time_llm = query(
@@ -111,6 +128,12 @@ if __name__ == "__main__":
                         f"{exp_id},{qid},  {model}, {input_token},{output_token}, {time_rag}, {time_llm}"
                     )
                     f.write(answer + "\n")
+                    handle = nvidia_smi.nvmlDeviceGetHandleByIndex(0)
+                    info = nvidia_smi.nvmlDeviceGetMemoryInfo(handle)
+                    if info.used > max_gpu_mem:
+                        max_gpu_mem=info.used   
                 score=scorer_mental(read_in_gd(),answers)
                 with open(metric_log_file, "a") as m:
-                    m.write(f"{exp_id}, {model}, {score}\n")
+                    m.write(f"{exp_id}, {score},{max_gpu_mem/(1024**3)}\n")
+        plan_recommender.plan_recommender('VM',metric_log_file,context_log_file)
+    nvidia_smi.nvmlShutdown()
