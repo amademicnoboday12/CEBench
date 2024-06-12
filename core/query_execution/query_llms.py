@@ -6,9 +6,9 @@ from qdrant_client import QdrantClient, models
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import Ollama
 from langchain_core.runnables import RunnablePassthrough
-from private_embedding import embeddings
-from timer_callback import TimerCallback
-from post_processing import post_processing_mental
+from core.utils.private_embedding import embeddings
+from core.monitor.timer_callback import TimerCallback
+from core.metrics.post_processing import post_processing_mental
 
 
 def query(

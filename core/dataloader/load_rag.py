@@ -3,7 +3,7 @@ from qdrant_client.models import Distance, VectorParams
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Qdrant
-from private_embedding import embeddings
+from core.utils.private_embedding import embeddings
 
 
 def load_knowledge_base(rag_collection, doc_path, quantization=None, chunk_size=512):
