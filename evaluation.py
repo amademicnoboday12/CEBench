@@ -1,13 +1,13 @@
 import yaml
 from yaml import Loader
 import os
-from query_llms import query
-from load_rag import load_knowledge_base
+from core.query_execution.query_llms import query
+from core.dataloader.load_rag import load_knowledge_base
 from loguru import logger
 import time
-from scorer import scorer_mental
-import nvidia_smi
-import plan_recommender
+from core.metrics.scorer import scorer_mental
+import core.planner.plan_recommender as plan_recommender
+from core.monitor.memory_usage import mem_usage
 
 
 current_time=time.time()
@@ -51,8 +51,6 @@ def read_in_gd():
 
 
 if __name__ == "__main__":
-    from query_llms import query
-    from load_rag import load_knowledge_base
 
     context_enable = os.path.exists(CONTEXT_FILE)
     exp_id = 0
@@ -84,12 +82,9 @@ if __name__ == "__main__":
                                     f"{exp_id}, {qid}, {RAG_COLLECTION}, {qt},{chunk}, {model},{top_k}, {input_token}, {output_token}, {time_rag}, {time_llm}"
                                 )
                                 f.write(answer + "\n")
-                                nvidia_smi.nvmlInit()
-                                handle = nvidia_smi.nvmlDeviceGetHandleByIndex(0)
-                                info = nvidia_smi.nvmlDeviceGetMemoryInfo(handle)
-                                if info.used > max_gpu_mem:
-                                    max_gpu_mem=info.used
-                                nvidia_smi.nvmlShutdown()
+                                mem_used=mem_usage()
+                                if mem_used > max_gpu_mem:
+                                    max_gpu_mem=mem_used
                             score=scorer_mental(read_in_gd(),answers)
                             with open(metric_log_file, "a") as m:
                                 m.write(f"{exp_id}, {score},{max_gpu_mem/(1024**3)}\n")
@@ -126,12 +121,9 @@ if __name__ == "__main__":
                         f"{exp_id},{qid},  {model}, {input_token},{output_token}, {time_rag}, {time_llm}"
                     )
                     f.write(answer + "\n")
-                    nvidia_smi.nvmlInit()
-                    handle = nvidia_smi.nvmlDeviceGetHandleByIndex(0)
-                    info = nvidia_smi.nvmlDeviceGetMemoryInfo(handle)
-                    if info.used > max_gpu_mem:
-                        max_gpu_mem=info.used   
-                    nvidia_smi.nvmlShutdown()
+                    mem_used=mem_usage()
+                    if mem_used > max_gpu_mem:
+                        max_gpu_mem=mem_used   
                 score=scorer_mental(read_in_gd(),answers)
                 with open(metric_log_file, "a") as m:
                     m.write(f"{exp_id}, {score},{max_gpu_mem/(1024**3)}\n")
